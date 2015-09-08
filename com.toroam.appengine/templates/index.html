@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+<div class="page-header">
+    <div class="row"><div class="span4">
+	<h3>your GPX files</h3>
+	Upload your file to our server</div>
+    <div class="span8"><a href="/upload" class="btn btn-success btn-large" title="click me">Upload tracks &raquo;</a></div>
+    </div>
+</div>
+
+<div class="row">
+<div class="span6">
+	<h3>Share your tracks and </h3>
+	<p> your journey, tracks, routes, gpx files and much more. Put your trace from your
+	roaming around on the web and collaborate with others. This service is just being build up,
+	so it is in a state of alpha version, play around, it will be updated to a final version during 2013!
+	You can register free and manage up to 100 gpx tracks on the server.
+	With only a small amount per year you can manage as many tracks as you want and
+	get more control over your database.</p>
+	<ul class="disc">
+		<li> <strong>Plan</strong> your route alone or in collaboration with others</li>
+		<li> Access your tracks with <strong><a href="http://mytourbook.sourceforge.net/mytourbook/">MyTourbook</a></strong></li>
+		<li> <strong>Edit</strong> tracks and routes point by point</li>
+		<li> Add <strong>waypoints</strong> to your track</li>
+		<li> Detect and remove <strong>GPS measurement errors</strong></li>
+		<li> Detect and <strong>remove elevation errors</strong></li>
+		<li> Link your <strong>geocoded images</strong> with your waypoints</li>
+		<li> Comment on tracks, routes and waypoints</li>
+		<li> <strong>Convert tracks</strong> from KML, OziExplorer, Garmin, and other formats.</li>
+		<li> <strong>Organize</strong> your collection of GPS tracks</li>
+	</ul>
+</div>
+<div class="span6">
+    <br />
+	<a href="/login" class="btn btn-primary btn-large" title="login to our system">Login / register now with Google, OpenID, ... &raquo;</a>
+
+	<br />
+	<br />
+
+	<div class="x">
+		<p><strong>See current tracks of the community:</strong></p>
+		<div class="btn-group btn-group-vertical">
+		{% for gpx in gpxheadings %}
+		<a class="btn btn-secondary" href ="edit/{{ gpx.key().id() }}">
+			{{ gpx.title }}  Created: {{ gpx.gpxdate.strftime('%Y-%m-%d')  }} Status: {{ gpx.status }}  <br />
+            Keywords: {{ gpx.keywords }} Owner: {{gpx.owner.userid }}</p></a>
+		{% endfor %}
+        </div>
+		<br />
+        <br />
+	</div>
+</div>
+</div><!--container-->
+
+{% if username == None %}
+<div class="container">
+	<div class="row">
+	<div class="span12">
+    <div class="alert">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <a href="/login">You are not logged in.</a>
+	</div>
+    </div>
+	</div>
+</div><!--container-->
+{% else %}
+<div class="container">
+	<div class="row">
+	<div class="span12">
+    <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        Welcome {{ username }}
+	</div>
+    </div>
+	</div>
+</div><!--container-->
+{% endif %}
+
+<div class="container">
+	<div class="row">
+	<div class="span12">
+    <div class="alert">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <h4>Warning!</h4>
+        This service is still under development - no data is saved!
+	</div>
+    </div>
+	</div>
+</div><!--container-->
+
+{% endblock content %}

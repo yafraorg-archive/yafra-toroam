@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+<div class="row">
+    <div class="span5">
+	<h3>Upload ...</h3>
+	<p>Simply upload a GPX file or create a new track or route online</p>
+    </div>
+
+	<div class="span7 hidden-phone">
+    	<div class="well">
+		<form enctype="multipart/form-data" method="post" action="/upload">
+  			<input type="file" class="input-xlarge" name="gpxfile" />
+  			<input type="submit" class="btn btn-primary" value="Start upload" />
+		</form>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="span12">
+	<hr />
+	<h3>... or create a new</h3>
+	</div>
+</div>
+
+{% include "createhead.html" ignore missing %}
+</div>
+
+{% endblock content %}
+
+{% block addon %}
+    {{ super() }}
+	<script type="text/javascript" src="/static/js/bootstrap-filestyle-0.1.0.min.js"></script>
+	<script>
+	$(":file").filestyle()
+	</script> 
+{% endblock %}

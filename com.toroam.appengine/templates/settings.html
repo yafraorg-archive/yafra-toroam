@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+<div class="row">
+    <div class="span5">
+    <h3>Settings</h3>
+    <p>User, Profile, Account type, How many entries, overall map, which map, ....</p>
+	<table class="table table-condensed">
+		<tbody>
+			<tr><td>Registration name:</td> <td>{{ dbuser.userid }}</td></tr>
+      		<tr><td>Settings:</td> <td>{{ dbuser.usersettings }}</td></tr>
+      		<tr><td>Is administrator:</td> <td>{{ dbuser.admin }}</td></tr>
+      		<tr><td>Preferred tags:</td> <td>{{ dbuser.preftags }}</td></tr>
+      		<tr><td>Registration date:</td> <td>{{ dbuser.dateofreg }}</td></tr>
+      		<tr><td>Still active:</td> <td>{{ dbuser.active }}</td></tr>
+      		<tr><td>Payed member:</td> <td>{{ dbuser.payedmember }}</td></tr>
+      		<tr><td>Payed till:</td> <td>{{ dbuser.payedtill }}</td></tr>
+      		<tr><td>Payed cycle:</td> <td>{{ dbuser.payedcycle }}</td></tr>
+      		<tr><td>Payed with:</td> <td>{{ dbuser.payedwith }}</td></tr>
+		</tbody>
+    </table>
+    </div>
+    <div class="span7">
+    <h3>Stats</h3>
+    <p>User, Profile, Account type, How many entries, overall map, which map, ....</p>
+	<table class="table table-condensed">
+		<tbody>
+        {% for gpx in gpxs %}
+		<tr> <td><a href="/edit/{{ gpx.key().id() }}">{{ gpx.title }}</a></td></tr>
+        {% endfor %}
+		</tbody>
+    </table>
+    </div>
+</div>
+
+{% if allusers != None %}
+<div class="row">
+    <div class="span8">
+	    <h3>Users</h3>
+	    <p>All registered users</p>
+		<table class="table table-condensed">
+			<thead><tr>
+		    	<th>ID</th> <th>Is admin</th> <th>Is active</th> <th>Payed member</th> <th>Registration date</th>
+			</tr></thead>
+			<tbody>
+	    	{% for u in allusers %}
+			<tr><td>{{ u.userid }}</td> <td>{{ u.admin }}</td> <td>{{ u.active }}</td> <td>{{ u.payedmember }}</td> <td>{{ u.dateofreg }}</td> </tr>
+	        {% endfor %}
+			</tbody>
+	    </table>
+    </div>
+</div>
+{% endif %}
+</div>
+{% endblock content %}

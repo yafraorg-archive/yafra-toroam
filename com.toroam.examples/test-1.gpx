@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx xmlns="http://www.topografix.com/GPX/1/1" creator="toroam.com Martin Weber" version="1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+<metadata> <!-- Metadaten --> </metadata>  
+<!-- Waypoint -->
+<wpt lat="47.2385690079" lon="7.29160666466">
+<!-- Attribute des Wegpunkts -->
+<name>Wegpunkt 1</name>
+</wpt>
+<!-- Route -->
+<rte>
+<rtept lat="47.2385690079" lon="7.29160666466">
+<name>Route #001</name>
+</rtept>
+<rtept lat="47.2394941077" lon="7.29389190674">
+<name>#002</name>
+</rtept>
+<rtept lat="47.2405284521" lon="7.29655265808">
+<name>#003</name>
+</rtept>
+<rtept lat="47.2407578988" lon="7.29731440544">
+<name>#004</name>
+</rtept>
+</rte>  
+<!-- Tracks -->
+<trk>
+<trkseg>
+<trkpt lat="47.2385690079" lon="7.29160666466">
+<name>Track #001</name>
+</trkpt>
+<trkpt lat="47.2394941077" lon="7.29389190674">
+<name>Track #002</name>
+</trkpt>
+<trkpt lat="47.2405284521" lon="7.29655265808">
+<name>Track #003</name>
+</trkpt>
+<trkpt lat="47.2407578988" lon="7.29731440544">
+<name>Track #004</name>
+</trkpt>
+</trkseg>
+</trk>
+</gpx>

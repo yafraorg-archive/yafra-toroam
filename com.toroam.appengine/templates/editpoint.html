@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+<div class="row">
+	<div class="span6">
+	<form action="/edit/{{ gpx.key().id() }}/{{ point.key().id() }}" method="post">
+		<fieldset>
+		<legend>GPX point</legend>
+		<p>Edit your point in the form below or on the map.</p>
+		<label for="idfname"><span class="required">*</span> Name</label><input type="text" size="30" id="idfname" name="fname" value="{{ point.name }}"/>
+		<label for="idfdesc">Description</label><textarea rows="3" name="fdesc" class="span4" id="idfdesc">{{ point.desc }}</textarea>
+		<label for="idflat">Lat<input type="number" step="any" id="idflat" name="flat" value="{{ point.lat }}"/></label>
+		<label for="idflon">Lon<input type="number" step="any" id="idflon" name="flon" value="{{ point.lon }}"/></label>
+	    <input type="submit" class="btn" value="Submit your changes" name="submit_form"/>
+		<a href="/delete/{{ gpx.key().id() }}/{{ point.key().id() }}" class="btn">Delete</a>
+		<br />
+		</fieldset>
+	</form>
+	</div>
+
+    <div class="span6">
+	<script>
+	function initialize() {
+		var rtepoint = new google.maps.LatLng({{ point.lat }}, {{ point.lon}});
+		var mapOptions = {
+			zoom: 11,
+			center: rtepoint,
+			mapTypeId: google.maps.MapTypeId.ROADMAP,
+			panControl: true,
+			zoomControl: true,
+			mapTypeControl: true,
+			scaleControl: false,
+			streetViewControl: false,
+			overviewMapControl: false
+			}
+		var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+		var marker = new google.maps.Marker({
+    		position: rtepoint,
+    		map: map,
+    		draggable:true,
+	    	animation: google.maps.Animation.DROP,
+    		title: "{{point.name}}"
+	    });
+
+		// Add dragging event listeners.
+		google.maps.event.addListener(marker, 'dragend', function() {
+			var newpos = marker.getPosition();
+			//updateMarkerPosition(newpos);
+		    document.getElementById('idflat').value = newpos.lat();
+		    document.getElementById('idflon').value = newpos.lng();
+		});
+	}
+
+	function loadScript() {
+		var script = document.createElement("script");
+		script.type = "text/javascript";
+		script.src = "http://maps.googleapis.com/maps/api/js?key=AIzaSyD-6G4fsz_dObNa_1Qdq04dEsp46KR6Gf4&sensor=false&callback=initialize";
+		document.body.appendChild(script);
+	}
+	window.onload = loadScript;
+	</script>
+	<div id="map_canvas" class="map" style="width: 450px; height: 350px;"></div>
+	<br />
+	<br />
+	</div>
+</div>
+
+<div class="row">
+	<div class="span12">
+	<a href="/edit/{{ gpx.key().id() }}" class="btn btn-success btn-large" title="go back">go back to your GPX file &raquo;</a>
+	</div>
+</div>
+
+</div>
+{% endblock content %}

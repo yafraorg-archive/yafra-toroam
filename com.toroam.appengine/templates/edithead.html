@@ -1,0 +1,155 @@
+<div class="row">
+	<div class="span7">
+	<form class="well form-inline" action="/edit/{{ gpx.key().id() }}" method="post">
+		<legend>GPX head</legend>
+		<small>
+		<p>Edit your GPX header and all waypoint, tracks and routes here. Use this form to edit the meta and raw data. Use the map in order to edit your point
+		on a map.</p>
+		</small>
+		<label for="idftitle">Title:
+			<input type="text" size="30" id="idftitle" name="ftitle" value="{{ gpx.title }}"/></label>
+		<br />
+		<label for="idfdesc">Description</label>
+			<textarea rows="3" class="input-xlarge" name="fdesc" id="idfdesc">{{ gpx.description }}</textarea>
+		<br />
+		<br />
+		<label for="idfstatus">Status:
+			<select class="input-medium" name="fstatus" id="idfstatus">
+	        <option value="Draft">Draft</option>
+			<option value="Complete">Complete</option>
+	        <option value="Error">Error</option>
+	      	</select></label>
+	    <label for="idfradiopriv" class="radio inline">
+	    	<input type="radio" name="fprivacy" value="1" checked = "checked" id="idfradiopriv" />Private</label>
+		<label for="idfradiopub" class="radio inline">
+			<input type="radio" name="fprivacy" value="2" id="idfradiopub" />Public</label>
+		<br />
+	    <label for="idfauthor">Author:
+	    	<input type="text" id="idfauthor" class="input-small" name="fauthor" value="{{ gpx.author }}"/></label>
+	    <label for="idfauthoremail">Author e-mail:
+	    	<input type="text" id="idfauthoremail" class="input-small" name="fauthoremail" value="{{ gpx.authoremail }}"/></label>
+	    <label for="idfauthorlink">Author link:
+	    	<input type="text" id="idfauthorlink" class="input-medium" name="fauthorlink" value="{{ gpx.authorlink }}"/></label>
+	    <label for="idflink">Link:
+	    	<input type="text" id="idflink" class="input-medium" name="flink" value="{{ gpx.link }}"/></label>
+		<br />
+	    <label for="idftags">Tags:
+	    	<input type="text" id="idftags" class="input-xlarge" name="ftags" value="{{ gpx.keywords }}"/></label>
+		<br />
+	    <input type="submit" class="btn" value="Submit your changes" name="submit_form"/>
+		<a href="/delete/{{ gpx.key().id() }}" class="btn">Delete</a>
+		<script>
+	    document.getElementById('idfstatus').value = '{{ gpx.status }}';
+	    if ({{ gpx.privacy}} == 1)
+	    	{
+		    document.getElementById('idfradiopriv').checked = true;
+	    	}
+	    else
+	    	{
+		    document.getElementById('idfradiopub').checked = true;
+	    	}
+		</script> 
+	</form>
+	</div>
+
+    <div class="span5">
+	<script>
+	function initialize() {
+		var gpxpoint = new google.maps.LatLng(47.2385680079,7.206296);
+		var mapOptions = {
+			zoom: 4,
+			center: gpxpoint,
+			mapTypeId: google.maps.MapTypeId.ROADMAP,
+			panControl: true,
+			zoomControl: true,
+			mapTypeControl: true,
+			scaleControl: false,
+			streetViewControl: false,
+			overviewMapControl: false
+			}
+		var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+
+
+		{% for trk in trks %}
+		{% if trk.segment == 0 %}
+		{% if trk.pointorder == 0 %}
+	    var linetrkcoord{{trk.unitnumber}} = [
+			{% for trk2 in trks %}
+			{% if trk2.unitnumber == trk.unitnumber %}
+			{% if trk2.segment != 0 %}
+			{% if trk2.pointorder != 0 %}
+				{% if loop.last %}
+				    new google.maps.LatLng({{trk2.lat}}, {{trk2.lon}})
+				{% else %}
+				    new google.maps.LatLng({{trk2.lat}}, {{trk2.lon}}),
+				{% endif %}
+			{% endif %}
+			{% endif %}
+			{% endif %}
+			{% endfor %}
+			];
+
+		var linerte{{trk.unitnumber}} = new google.maps.Polyline({
+		    path: linetrkcoord{{trk.unitnumber}},
+		    strokeColor: "#FF0000",
+	    	strokeOpacity: 1.0,
+	    	strokeWeight: 3,
+	    	map: map
+		});
+		{% endif %}
+		{% endif %}
+		{% endfor %}
+
+
+		{% for rte in rtes %}
+		{% if rte.pointorder == 0 %}
+		var linertecoord{{rte.unitnumber}} = [
+			{% for rte2 in rtes %}
+			{% if rte2.unitnumber == rte.unitnumber %}
+			{% if rte2.pointorder != 0 %}
+				{% if loop.last %}
+				    new google.maps.LatLng({{rte2.lat}}, {{rte2.lon}})
+				{% else %}
+				    new google.maps.LatLng({{rte2.lat}}, {{rte2.lon}}),
+				{% endif %}
+			{% endif %}
+			{% endif %}
+			{% endfor %}
+			];
+		var linerte{{rte.unitnumber}} = new google.maps.Polyline({
+		    path: linertecoord{{rte.unitnumber}},
+		    strokeColor: "forestgreen",
+	    	strokeOpacity: 1.0,
+	    	strokeWeight: 3,
+	    	map: map
+		});
+		{% endif %}
+		{% endfor %}
+
+
+		{% for wpt in wpts %}
+		var wptpoint{{wpt.unitnumber}} = new google.maps.LatLng({{ wpt.lat }}, {{ wpt.lon}});
+		var wptmarker{{wpt.unitnumber}} = new google.maps.Marker({
+    		position: wptpoint{{wpt.unitnumber}},
+    		map: map,
+    		draggable:false,
+    		title: "{{wpt.name}}"
+	    });
+		{% endfor %}
+	}
+
+	function loadScript() {
+		var script = document.createElement("script");
+		script.type = "text/javascript";
+		script.src = "http://maps.googleapis.com/maps/api/js?key=AIzaSyD-6G4fsz_dObNa_1Qdq04dEsp46KR6Gf4&sensor=false&callback=initialize";
+		document.body.appendChild(script);
+	}
+	window.onload = loadScript;
+	</script>
+	<div id="map_canvas" class="map" style="width: 450px; height: 350px;"></div>
+	<br />
+	<br />
+	<a href="/upload" class="btn btn-success btn-large" title="click me">Upload another tracks &raquo;</a>
+    <a href="/export/{{ gpx.key().id() }}" class="btn btn-success btn-large" title="click me">Export as GPX &raquo;</a>
+	</div>
+</div>

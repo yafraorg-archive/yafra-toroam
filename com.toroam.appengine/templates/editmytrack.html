@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+<div id="createhead">
+	{% include "edithead.html" ignore missing %}
+</div>
+<div id="gpxdetails">
+	{% include "editdetail.html" ignore missing %}
+</div>
+</div>
+{% endblock content %}
+{% block addon %}
+    {{ super() }}
+	<script type="text/javascript" src="/static/js/jquery.tablesorter.min.js"></script>
+	<script>
+	$(document).ready(function() 
+    	{ 
+        $("#trktable1").tablesorter(); 
+    	} 
+	);
+	$(document).ready(function() 
+    	{ 
+        $("#trktable2").tablesorter(); 
+    	} 
+	);
+	$(document).ready(function() 
+    	{ 
+        $("#trktable3").tablesorter(); 
+    	} 
+	);
+	$(document).ready(function() 
+    	{ 
+        $("#trktable4").tablesorter(); 
+    	} 
+	);
+	$(document).ready(function() 
+    	{ 
+        $("#rtetable1").tablesorter(); 
+    	} 
+	);
+	$(document).ready(function() 
+    	{ 
+        $("#rtetable2").tablesorter(); 
+    	} 
+	);
+	$(document).ready(function() 
+    	{ 
+        $("#rtetable3").tablesorter(); 
+    	} 
+	);
+	$(document).ready(function() 
+    	{ 
+        $("#rtetable4").tablesorter(); 
+    	} 
+	);
+	$(document).ready(function() 
+    	{ 
+        $("#wpttable").tablesorter(); 
+    	} 
+	);
+</script> 
+{% endblock %}

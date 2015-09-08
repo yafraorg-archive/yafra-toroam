@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+<div class="row">
+	<div class="span6">
+	<form action="/editseg/{{ trk.key().id() }}" method="post">
+		<fieldset>
+		<legend>GPX head</legend>
+		<p>Edit your point in the form below or on the map.</p>
+		<label for="id_title"><span class="required">*</span> Title</label><input type="text" size="30" id="id_title" name="title" value="{{ trk.title }}"/>
+		<label for="Description">Description</label><textarea rows="3" name="description" id="id_description">{{ gpx.description }}</textarea>
+	    <label for="tags" class="labelsmall"><input type="text" id="tags" name="tags" value="{{ gpx.keywords }}"/>Tags</label>
+	    <input type="submit" value="Submit your changes" name="submit_form"/>
+		<br />
+		</fieldset>
+	</form>
+	</div>
+
+    <div class="span6">
+	<script>
+	function initialize() {
+		var mapOptions = {
+		zoom: 11,
+		center: new google.maps.LatLng(47.397242, 7.208943),
+		mapTypeId: google.maps.MapTypeId.ROADMAP,
+		panControl: true,
+		zoomControl: true,
+		mapTypeControl: true,
+		scaleControl: false,
+		streetViewControl: false,
+		overviewMapControl: false
+		}
+	var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+    var flightPlanCoordinates = [  new google.maps.LatLng({{trk.lat}}, {{trk.lon}}) ];
+	var flightPath = new google.maps.Polyline({
+	    path: flightPlanCoordinates,
+	    strokeColor: "#FF2244",
+    	strokeOpacity: 1.0,
+    	strokeWeight: 9
+	});
+
+	flightPath.setMap(map);
+	}
+
+	function loadScript() {
+		var script = document.createElement("script");
+		script.type = "text/javascript";
+		script.src = "http://maps.googleapis.com/maps/api/js?key=AIzaSyD-6G4fsz_dObNa_1Qdq04dEsp46KR6Gf4&sensor=false&callback=initialize";
+		document.body.appendChild(script);
+	}
+	window.onload = loadScript;
+	</script>
+	<div id="map_canvas" class="map" style="width: 450px; height: 350px;""></div>
+	<br />
+	<br />
+	</div>
+</div>
+
+</div>
+{% endblock content %}

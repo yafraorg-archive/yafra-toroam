@@ -1,0 +1,158 @@
+<div class="tabbable">
+
+<ul class="nav nav-tabs" data-tabs="tabs">
+	<li class="active"><a href="#Tracks" data-toggle="tab">Tracks</a></li>
+	<li><a href="#Routes" data-toggle="tab">Routes</a></li>
+	<li><a href="#Waypoints" data-toggle="tab">Waypoints</a></li>
+	<li><a href="#Summary" data-toggle="tab">Summary</a></li>
+</ul>
+<div class="tab-content">
+	<div class="tab-pane active" id="Tracks">
+		<div class="btn-toolbar">
+			<div class="btn-group">
+            <a href="/deletetrks/{{ gpx.key().id() }}" class="btn">Delete all tracks</a>
+  			</div>
+		</div>
+		<div class="accordion" id="accordionTrk">
+		{% for trk in trks %}
+		{% if trk.segment == 0 %}
+		{% if trk.pointorder == 0 %}
+		<div class="accordion-group">
+		<div class="accordion-heading">
+		  <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionTrk" href="#coltrk{{trk.unitnumber}}">
+		     {{ trk.name }}
+		  </a>
+		</div>
+		<div id="coltrk{{trk.unitnumber}}" class="accordion-body collapse">
+		<div class="accordion-inner">
+		<a href="/merge2trk/{{ gpx.key().id() }}/{{trk.unitnumber}}" class="btn">Merge track into other gpx file</a>
+        <a href="/convert2rte/{{ gpx.key().id() }}/{{trk.unitnumber}}" class="btn">Convert track to route</a>
+		<a href="/deletetrks/{{ gpx.key().id() }}/{{trk.unitnumber}}" class="btn">Delete track</a>
+		<table id="trktable{{trk.unitnumber}}" class="table table-condensed table-striped table-hover tablesorter">
+		<thead><tr>
+	    	<th>Segment</th> <th>#</th> <th>Name</th> <th>Lat</th> <th>Lon</th> <th><i class="icon-time"></i></th> <th>Comment</th>
+		</tr></thead>
+		<tbody>
+		{% for trk2 in trks %}
+		{% if trk2.unitnumber == trk.unitnumber %}
+		{% if trk2.segment != 0 %}
+		{% if trk2.pointorder != 0 %}
+		<tr>
+			<td>{{ trk2.segment }}</td> <td>{{ trk2.pointorder }}</td>
+			<td><a href="/edit/{{ gpx.key().id() }}/{{ trk2.key().id() }}">{{ trk2.name }}</a></td>
+			<td>{{ trk2.lat }}</td> <td>{{ trk2.lon }}</td>
+            <td>{{ trk2.dateraw }}</td> <td>{{ trk2.cmt }}</td>
+		</tr>
+		{% endif %}
+		{% endif %}
+		{% endif %}
+		{% endfor %}
+		</tbody>
+		</table>
+		</div>
+		</div>
+		</div>
+		{% endif %}
+		{% endif %}
+		{% endfor %}
+		</div>
+	</div>
+	
+	<div class="tab-pane" id="Routes">
+		<div class="btn-toolbar">
+			<div class="btn-group">
+			<a href="/createrte/{{ gpx.key().id() }}" class="btn">Create new route</a>
+			<a href="/deletertes/{{ gpx.key().id() }}" class="btn">Delete all routes</a>
+  			</div>
+		</div>
+		<div class="accordion" id="accordionRte">
+		{% for rte in rtes %}
+		{% if rte.pointorder == 0 %}
+		<div class="accordion-group">
+		<div class="accordion-heading">
+		  <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordionRte" href="#colrte{{rte.unitnumber}}">
+		     {{ rte.name }}
+		  </a>
+		</div>
+		<div id="colrte{{rte.unitnumber}}" class="accordion-body collapse">
+		<div class="accordion-inner">
+		<a href="/deletertes/{{ gpx.key().id() }}/{{rte.unitnumber}}" class="btn">Delete route</a>
+        <a href="/createrte/{{ gpx.key().id() }}/{{rte.unitnumber}}" class="btn">Add new route point</a>
+		<table id="rtetable{{rte.unitnumber}}" class="table table-condensed table-striped table-hover tablesorter">
+		<thead><tr>
+	    	<th>#</th> <th>Title</th> <th>Lat</th> <th>Lon</th> <th><i class="icon-time"></i></th> <th>Comment</th>
+		</tr></thead>
+		<tbody>
+		{% for rte2 in rtes %}
+		{% if rte2.unitnumber == rte.unitnumber %}
+		{% if rte2.pointorder != 0 %}
+		<tr>
+			<td>{{ rte2.pointorder }}</td><td><a href="/edit/{{ gpx.key().id() }}/{{ rte2.key().id() }}">{{ rte2.name }}</a></td>
+            <td>{{ rte2.lat }}</td> <td>{{ rte2.lon }}</td> <td>{{ rte2.dateraw }}</td> <td>{{ rte2.cmt }}</td>
+	  	</tr>
+		{% endif %}
+		{% endif %}
+		{% endfor %}
+		</tbody>
+		</table>
+		</div>
+		</div>
+		</div>
+		{% endif %}
+		{% endfor %}
+		</div>
+	</div>
+
+	<div class="tab-pane" id="Waypoints">
+		<div class="btn-toolbar">
+			<div class="btn-group">
+			<a href="/createwpt/{{ gpx.key().id() }}" class="btn">Create new waypoint</a>
+			<a href="/deletewpts/{{ gpx.key().id() }}" class="btn">Delete all waypoints</a>
+  			</div>
+		</div>
+		<table id="wpttable" class="table table-condensed table-striped table-hover tablesorter">
+		<thead><tr>
+	    	<th>#</th> <th>Title</th> <th>Lat</th> <th>Lon</th> <th>Description</th> <th>Comment</th>
+		</tr></thead>
+		<tbody>
+		{% for wpt in wpts %}
+		<tr>
+			<td>{{ wpt.unitnumber }}</td><td><a href="/edit/{{ gpx.key().id() }}/{{ wpt.key().id() }}">{{ wpt.name }}</a></td>
+            <td>{{ wpt.lat }}</td> <td>{{ wpt.lon }}</td> <td>{{ wpt.desc }}</td> <td>{{ wpt.cmt }}</td>
+	  	</tr>
+		{% endfor %}
+		</tbody>
+		</table>
+	</div>
+
+	<div class="tab-pane" id="Summary">
+		<div class="btn-toolbar">
+			<div class="btn-group">
+			<a href="#" class="btn">Set elevation for all points</a>
+			<a href="#" class="btn">Define center lat/lon for your GPX file</a>
+  			</div>
+		</div>
+		<table id="sumtable" class="table table-condensed table-striped">
+		<thead><tr>
+	    	<th>Field</th> <th>Value</th>
+		</tr></thead>
+		<tbody>
+		<tr> <td>#</td><td>{{ gpx.key().id() }}</td> </tr>
+		<tr> <td>Title</td><td>{{ gpx.title }}</td> </tr>
+		<tr> <td>Owner</td><td>{{ gpx.owner.userid }}</td> </tr>
+		<tr> <td>Last modified on</td><td>{{ gpx.modifieddate }}</td> </tr>
+		<tr> <td>GPX version</td><td>{{ gpx.version }}</td> </tr>
+		<tr> <td>GPX creator</td><td>{{ gpx.creator }}</td> </tr>
+		<tr> <td>GPX metadateraw</td><td>{{ gpx.metadateraw }}</td> </tr>
+		<tr> <td>GPX extensions</td><td>{{ gpx.extensions }}</td> </tr>
+		<tr> <td>Number of tracks</td><td>n/a</td> </tr>
+		<tr> <td>Number of routes</td><td>n/a</td> </tr>
+		<tr> <td>Number of waypoints</td><td>n/a</td> </tr>
+		</tbody>
+		</table>
+	</div>
+	
+</div>  
+
+</div>
+

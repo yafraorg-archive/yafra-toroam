@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+
+{% if user != None %}
+<div class="row">
+    <div class="span12">
+    <h3>Welcome {{ user.userid }}</h3>
+    <p><a href="{{ logout }}">Logout</a> or subscribe for advanced features.</p>
+    </div>
+</div>
+{% endif %}
+
+
+{% if user == None %}
+<div class="row">
+    <div class="span12">
+    <h3>Register / login now:</h3>
+    <p>Login and register with your OpenID account.</p>
+	{% for link, name in reglist %}
+	<p>[<a href="{{ name }}">{{ link }}</a>]</p>
+	{% endfor %}
+    </div>
+</div>
+{% endif %}
+
+</div>
+{% endblock content %}
