@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+<div class="row">
+    <div class="span12">
+        <a href="/upload" class="btn btn-success btn-large" title="click me">Create new tracks &raquo;</a>
+    </div>
+</div>
+
+    <br />
+    <br />
+
+<div class="row">
+<div class="span6">
+    <div id="communitybox">
+        <p><strong>See my list of tracks, routes and waypoints:</strong></p>
+        <div class="btn-group btn-group-vertical">
+        {% for gpx in gpxheadings %}
+        <a class="btn" href ="edit/{{ gpx.key().id() }}"> 
+            {{ gpx.title }}  Created: {{ gpx.gpxdate.strftime('%Y-%m-%d')  }} Status: {{ gpx.status }}  <br />
+            Creator: {{ gpx.creator }} </p></a>
+        {% endfor %}
+        </div>
+        <br />
+        <br />
+    </div>
+    </div>
+    <div class="span6">
+        <br /><br /><br />
+        <br /><br /><br />
+        Google Maps as heat map here.
+    </div>
+    </div>
+</div>
+{% endblock content %}

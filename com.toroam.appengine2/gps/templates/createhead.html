@@ -1,0 +1,12 @@
+
+<form action="/create" method="post">
+	<fieldset>
+	<legend>GPX header</legend>
+  <p>Edit your GPX header and all waypoint, tracks and routes here. Use this form to edit the meta and raw data. Use the map in order to edit your point
+  	on a map.</p>
+<label for="id_title"><span class="required">*</span> Title</label><input type="text" id="id_title" name="title" />
+<label for="id_creator"><span class="required">*</span> Creator</label><input type="text" name="creator" id="id_creator"/>
+		<label for="Description">Description</label><textarea cols="90" rows="3" name="description" id="id_description"></textarea>
+    <input type="submit" class="secondary button" value="Submit your changes" name="submit_form"/>
+    </fieldset>
+</form>

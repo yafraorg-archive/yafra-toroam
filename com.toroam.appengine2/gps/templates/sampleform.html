@@ -1,0 +1,55 @@
+<div class="formarea">
+<div class="requiredfld"><span class="required">*</span> Required</div>
+<form action="/manage/{{ gpx.key().id() }}" method="post">
+  <h2>WittySparks CSS FrameWork</h2>
+  <p>Tempor metus est. ultricies vitae, condimentum, pharetra. eget, sapien fermentum, cursus amet ipsum habitant leo. wisi. facilisis. egestas semper. sit ac dui tempus libero eu quam est sagittis eros Vestibulum eu luctus, commodo et eget dapibus, ornare tincidunt amet, Aliquam fames tortor ullamcorper feugiat ac ante.</p>
+  <h3>My Form Sub Title</h3>
+  <div class="subfieldsset">
+    <div>
+      <label for="id_title"><span class="required">*</span> Title</label>
+      <input type="text" size="30" id="id_title" name="title" value="{{ gpx.title }}"/>
+      <label for="id_creator"><span class="required">*</span> Creator</label>
+      <input type="text" size="30" name="creator" value="{{ gpx.creator }}" id="id_creator"/>
+    </div>
+    <div>
+      <label for="password"><span class="required">*</span> Password</label>
+      <input type="text" size="30" class="error" id="password" name="password"/>
+      <label for="id_status">Country</label>
+      <select name="status" id="id_status">
+        <option value="Draft">Draft</option>
+        <option value="Complete">Complete</option>
+        <option value="Error">Error</option>
+      </select>
+      <br />
+      <label></label>
+      <span class="note">Must contain one numeric and one capital letter</span>
+      </div>
+    <div>
+      <label></label>
+      <label for="premium" class="labelsmall">
+      <input type="radio" name="ordertype" id="premium" />
+      Premium</label>
+      <label for="free" class="labelsmall">
+      <input type="radio" name="ordertype" id="free" />
+      Free</label>
+    </div>
+    <div>
+      <label for="Description">Description</label>
+      <textarea cols="50" rows="3" name="description" value="{{ gpx.description }}" id="id_description"></textarea>
+    </div>
+    <div>
+      <label></label><label for="Newsletters" class="labelsmall"><input type="checkbox" id="Newsletters" name="Newsletters"/> Get Daily Newsletter?</label>
+    </div><br />
+
+  </div>
+  <div class="buttonsarea">
+    <input type="submit" value="Save the form & Take me to the next step" name="submit_form"/>
+  </div>
+  <br />
+
+  <script>
+    document.getElementById('id_status').value = '{{ gpx.status }}';
+  </script> 
+</form>
+</div>
+
